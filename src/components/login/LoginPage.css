@@ -1,0 +1,25 @@
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+    /* color: white !important; */
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.form-div{
+    width: 70%;
+}
+
+@media screen and (max-width: 1023px) {
+    .form-div{
+        width: 100%;
+    }
+}
