@@ -1,7 +1,7 @@
 import { apiClient } from "../api/ApiClient";
 
-export const executeJwtAuthLogin = (email, password) =>
-    apiClient.post('/api/auth/login', {email, password});
+export const executeJwtAuthLogin = (emailOrMobile, password) =>
+    apiClient.post('/api/auth/login', {emailOrMobile, password});
 
 export const executeRegisteration = (newUserData) =>
     apiClient.post('/api/auth/register', newUserData);
@@ -9,11 +9,11 @@ export const executeRegisteration = (newUserData) =>
 export const executeJwtAuthRegister = (newUserData) =>
     apiClient.post('/api/auth/register/verify', newUserData);
 
-export const executeResendVerificationCode= (email) =>
-    apiClient.get(`/api/auth/register/verify/resend?email=${email}`);
+export const executeResendVerificationCode= (emailOrMobile) =>
+    apiClient.get(`/api/auth/register/verify/resend?identifier=${emailOrMobile}`);
 
-export const executeSubmitEmailForCreateNewPasswordVerification= (email)=>
-    apiClient.get(`/api/auth/forget-password/verify?email=${email}`)
+export const executeSubmitEmailForCreateNewPasswordVerification= (emailOrMobile)=>
+    apiClient.get(`/api/auth/forget-password/verify?identifier=${emailOrMobile}`)
 
 export const executeSubmitNewPassword= (newPasswordData)=>
     apiClient.post(`/api/auth/forget-password/reset`, newPasswordData)

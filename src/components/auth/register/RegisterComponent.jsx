@@ -69,7 +69,7 @@ const RegisterComponent = () => {
   const handleSubmitRegistration = async (values, { setSubmitting }) => {
     const user= await authContext.register(values, setSubmitting);
       if(user){
-          navigate(`/verify?email=${user?.email}`, { replace: true });
+          navigate(`/verify?identifier=${user?.email}`, { replace: true });
       }
   }
 

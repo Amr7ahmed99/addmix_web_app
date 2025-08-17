@@ -24,9 +24,9 @@ export default function AuthProvider({children}){
         localStorage.setItem('user', JSON.stringify(user));
     }
 
-    const login= async (email, password, setFieldError, setSubmitting)=>{
+    const login= async (emailOrMobile, password, setFieldError, setSubmitting)=>{
         try{
-            const response= await executeJwtAuthLogin(email, password);
+            const response= await executeJwtAuthLogin(emailOrMobile, password);
             const data= response.data;
             if(response.status === HttpStatusCode.Ok){
                 if(!data?.user?.active){
@@ -57,7 +57,7 @@ export default function AuthProvider({children}){
     const verifyCodeForEmail= async (formUserData, setFieldError, setSubmitting)=>{
         try{
             const response= await executeJwtAuthRegister({
-                email: formUserData.email,
+                emailOrMobile: formUserData.emailOrMobile,
                 verificationCode: formUserData.otp
             });
             const data= response.data;
@@ -73,7 +73,7 @@ export default function AuthProvider({children}){
                 return true;
             }
         }catch(err){
-            const errMsg= err?.response?.data;
+            const errMsg= err?.response?.data?.message;
             if(errMsg){
                 // Handle authentication errors
                 if (errMsg.includes('Invalid')) {
@@ -123,9 +123,9 @@ export default function AuthProvider({children}){
         setUsername(null);
     }
 
-    const submitEmailForCreateNewPasswordVerification= async (email, setSubmitting)=>{
+    const submitEmailForCreateNewPasswordVerification= async (emailOrMobile, setSubmitting)=>{
         try{
-            const response= await executeSubmitEmailForCreateNewPasswordVerification(email);
+            const response= await executeSubmitEmailForCreateNewPasswordVerification(emailOrMobile);
             if(response.status === HttpStatusCode.Ok){
                 setUserIsNotActive(false);
                 toast.success(response?.data?.message)

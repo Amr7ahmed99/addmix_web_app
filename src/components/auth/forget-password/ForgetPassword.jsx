@@ -1,10 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { HiMail, HiLockClosed, HiEye, HiEyeOff } from "react-icons/hi";
+import { HiLockClosed, HiEye, HiEyeOff } from "react-icons/hi";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import VerifyCode from "../verify-code/VerifyCode";
 import "./ForgetPassword.css";
+import { MdPerson } from "react-icons/md";
 
 
 export default function ForgetPassword() {
@@ -12,7 +13,7 @@ export default function ForgetPassword() {
   const authContext = useAuth();
   const navigate = useNavigate();
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [email, setEmail] = useState("");
+  const [emailOrMobile, setEmailOrMobile] = useState("");
   const steps = [
     emailVerificationJSX,
     verifyEmail,
@@ -24,11 +25,13 @@ export default function ForgetPassword() {
   function validate (values){
     const errors = {};
 
-    // Email validation
-    if (nextStepIdx === 0 && !values.email) {
-      errors.email = "Email is required";
-    } else if (nextStepIdx === 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-      errors.email = "Invalid email address";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10,15}$/; // accepts 10–15 digits
+
+    if (nextStepIdx === 0 && !values.emailOrMobile) {
+      errors.emailOrMobile = "Email or mobile number is required";
+    } else if (nextStepIdx === 0 &&  !emailRegex.test(values.emailOrMobile) && !phoneRegex.test(values.emailOrMobile)) {
+      errors.emailOrMobile = "Enter a valid email address or mobile number";
     }
 
     // Password validation
@@ -51,14 +54,14 @@ export default function ForgetPassword() {
   };
 
   async function handleSubmitEmail(values, { setSubmitting }) {
-    setEmail(values.email);
-    if (await authContext.submitEmailForCreateNewPasswordVerification(values.email,setSubmitting)) {
+    setEmailOrMobile(values.emailOrMobile);
+    if (await authContext.submitEmailForCreateNewPasswordVerification(values.emailOrMobile, setSubmitting)) {
       setNextStepIdx( val=> ++val)
     }
   };
 
   async function handleSubmitNewPassword(values, { setSubmitting }){
-    values= {...values, email}
+    values= {...values, emailOrMobile}
     const user = await authContext.submitNewPassword(
       values,
       setSubmitting
@@ -110,36 +113,35 @@ export default function ForgetPassword() {
                 {/* Email Form with Formik */}
                 <Formik
                   initialValues={{
-                    email: "",
+                    emailOrMobile: "",
                   }}
                   validate={validate}
                   onSubmit={handleSubmitEmail}
                 >
                   {({ isSubmitting }) => (
                     <Form>
-                      {/* Email Field */}
+                      {/* Email or Mobile Field */}
                       <div className="mb-4 d-flex flex-column justify-content-center align-items-start">
                         <label
                           className="form-label text-white mb-2"
                           style={{ fontSize: "14px" }}
                         >
-                          Email address
+                          Email or Mobile
                         </label>
                         <div className="position-relative w-100">
                           <div
                             className="position-absolute start-0 top-50 translate-middle-y ps-3"
                             style={{ zIndex: 5 }}
                           >
-                            <HiMail size={20} className="text-white-50" />
+                            <MdPerson size={20} className="text-white-50" />
                           </div>
                           <Field
-                            type="email"
-                            name="email"
-                            className={`form-control ps-5 py-3 `}
-                            placeholder="Enter your email address"
+                            type="text"
+                            name="emailOrMobile"
+                            className={`form-control ps-5 py-3`}
+                            placeholder="Enter your email or mobile number"
                             style={{
                               background: "rgba(255, 255, 255, 0.1)",
-                              // backdropFilter: "blur(10px)",
                               borderRadius: "12px",
                               color: "white",
                               fontSize: "16px",
@@ -147,7 +149,7 @@ export default function ForgetPassword() {
                           />
                         </div>
                         <ErrorMessage
-                          name="email"
+                          name="emailOrMobile"
                           component="div"
                           className="text-danger mt-1"
                           style={{ fontSize: "12px" }}
@@ -398,7 +400,7 @@ export default function ForgetPassword() {
   };
 
   function verifyEmail(){
-    return <VerifyCode userEmailForNewPassword= {email} setNextStepIdx={setNextStepIdx}/>
+    return <VerifyCode userIdentifierForNewPassword= {emailOrMobile} setNextStepIdx={setNextStepIdx}/>
   }
 
   return steps[nextStepIdx]();
