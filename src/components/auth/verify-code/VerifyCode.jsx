@@ -5,16 +5,16 @@ import { toast } from "react-toastify";
 import { Form, Field, ErrorMessage, Formik } from "formik";
 import { useAuth } from "../../../context/AuthContext";
 import { useLocation } from "react-router-dom";
-import { HiMail } from "react-icons/hi";
+import { MdPerson } from "react-icons/md";
 
-export default function VerifyCode({userEmailForNewPassword, setNextStepIdx}) {
+export default function VerifyCode({userIdentifierForNewPassword, setNextStepIdx}) {
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
   const [canResend, setCanResend] = useState(false);
   const [isResending, setIsResending] = useState(false);
   const authContext = useAuth();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const email = !userEmailForNewPassword? queryParams.get("email"): userEmailForNewPassword;
+  const identifier = !userIdentifierForNewPassword? queryParams.get("identifier"): userIdentifierForNewPassword;
   const inputRefs = useRef([]);
 
   const handleInputChange = (index, ev, setFieldValue, values) => {
@@ -80,7 +80,7 @@ export default function VerifyCode({userEmailForNewPassword, setNextStepIdx}) {
       setFieldError("otp", "OTP must be 6 digits");
       return;
     }
-    values = { ...values, email , verifiyForResetPassword: userEmailForNewPassword? true: false};
+    values = { ...values, emailOrMobile: identifier , verifiyForResetPassword: userIdentifierForNewPassword? true: false};
     if (await authContext.verifyCodeForEmail(values, setFieldError, setSubmitting)) {
       if(setNextStepIdx){
         setNextStepIdx(val=> ++val);
@@ -93,7 +93,7 @@ export default function VerifyCode({userEmailForNewPassword, setNextStepIdx}) {
   const handleResend = async () => {
     try {
       setIsResending(true);
-      const response = await executeResendVerificationCode(email);
+      const response = await executeResendVerificationCode(identifier);
       if (response.status === HttpStatusCode.Ok) {
         toast.success("new code is sended");
         setIsResending(false);
@@ -153,13 +153,13 @@ export default function VerifyCode({userEmailForNewPassword, setNextStepIdx}) {
                   className="text-white fw-bold mb-3"
                   style={{ fontSize: "2.5rem" }}
                 >
-                  Verify Your Email
+                  Verify Your identifier
                 </h2>
                 <p className="text-light my-0 py-0">
                   {/* We've sent a verification code to your email address */}
                   Enter the 6-digit OTP sent to{" "}
-                  <HiMail size={20} className="text-white-50" />
-                  <strong> {email} </strong>
+                  <MdPerson size={20} className="text-white-50" />
+                  <strong> {identifier} </strong>
                 </p>
               </div>
 
