@@ -1,11 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { HiMail, HiLockClosed, HiEye, HiEyeOff } from "react-icons/hi";
+import { HiLockClosed, HiEye, HiEyeOff } from "react-icons/hi";
 import "./LoginComponent.css";
 import {FaGoogle} from "react-icons/fa";
 import { useAuth } from "../../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import SocialLinks from "../../general/social-links/SocialLinks";
+import { MdPerson } from "react-icons/md";
 
 const LoginComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,11 +17,13 @@ const LoginComponent = () => {
   const validate = (values) => {
     const errors = {};
 
-    // Email validation
-    if (!values.email) {
-      errors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-      errors.email = "Invalid email address";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10,15}$/; // accepts 10–15 digits
+
+    if (!values.emailOrMobile) {
+      errors.emailOrMobile = "Email or mobile number is required";
+    } else if (!emailRegex.test(values.emailOrMobile) && !phoneRegex.test(values.emailOrMobile)) {
+      errors.emailOrMobile = "Enter a valid email address or mobile number";
     }
 
     // Password validation
@@ -34,9 +37,9 @@ const LoginComponent = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
-      const user= await authContext.login(values.email, values.password, setFieldError, setSubmitting);
+      const user= await authContext.login(values.emailOrMobile, values.password, setFieldError, setSubmitting);
       if(user){
-          navigate(user.active? "/welcome": `/verify?email=${user?.email}`, { replace: true });
+          navigate(user.active? "/welcome": `/verify?identifier=${values.emailOrMobile}`, { replace: true });
       }
   }
 
@@ -102,29 +105,28 @@ const LoginComponent = () => {
                 >
                   {({ isSubmitting }) => (
                     <Form>
-                      {/* Email Field */}
+                      {/* Email or Mobile Field */}
                       <div className="mb-4 d-flex flex-column justify-content-center align-items-start">
                         <label
                           className="form-label text-white mb-2"
                           style={{ fontSize: "14px" }}
                         >
-                          Email address
+                          Email or Mobile
                         </label>
                         <div className="position-relative w-100">
                           <div
                             className="position-absolute start-0 top-50 translate-middle-y ps-3"
                             style={{ zIndex: 5 }}
                           >
-                            <HiMail size={20} className="text-white-50" />
+                            <MdPerson size={20} className="text-white-50" />
                           </div>
                           <Field
-                            type="email"
-                            name="email"
-                            className={`form-control ps-5 py-3 `}
-                            placeholder="Enter your email address"
+                            type="text"
+                            name="emailOrMobile"
+                            className={`form-control ps-5 py-3`}
+                            placeholder="Enter your email or mobile number"
                             style={{
                               background: "rgba(255, 255, 255, 0.1)",
-                              // backdropFilter: "blur(10px)",
                               borderRadius: "12px",
                               color: "white",
                               fontSize: "16px",
@@ -132,7 +134,7 @@ const LoginComponent = () => {
                           />
                         </div>
                         <ErrorMessage
-                          name="email"
+                          name="emailOrMobile"
                           component="div"
                           className="text-danger mt-1"
                           style={{ fontSize: "12px" }}
