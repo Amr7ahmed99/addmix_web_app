@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import { HiMail, HiLockClosed, HiEye, HiEyeOff, HiUser } from "react-icons/hi";
 import "./RegisterComponent.css";
 import {FaSignInAlt} from "react-icons/fa";
@@ -11,6 +11,7 @@ import SocialLinks from "../../general/social-links/SocialLinks";
 const RegisterComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [registeredUserEmail, setRegisteredUserEmail]= useState("");
   const authContext= useAuth();
   const navigate= useNavigate();
 
@@ -68,10 +69,16 @@ const RegisterComponent = () => {
 
   const handleSubmitRegistration = async (values, { setSubmitting }) => {
     const user= await authContext.register(values, setSubmitting);
-      if(user){
-          navigate(`/verify?identifier=${user?.email}`, { replace: true });
+      if(user.email){
+        setRegisteredUserEmail(user.email);
       }
   }
+
+  useEffect(()=>{
+    if(registeredUserEmail){
+      navigate(`/auth/verify?identifier=${registeredUserEmail}`, {replace: true});
+    }
+  }, [registeredUserEmail])
 
   return (
     // {/* Register Form Container */}
@@ -480,7 +487,7 @@ const RegisterComponent = () => {
                             "rgba(255, 255, 255, 0.9)";
                           e.target.style.transform = "translateY(0)";
                         }}
-                        onClick={()=> navigate('/login')}
+                        onClick={()=> navigate('/auth')}
                       >
                         <FaSignInAlt size={20} />
                         Back To Login

@@ -1,0 +1,230 @@
+.slider-product-card {
+  background: white;
+  border-radius: 12px;
+  min-width: 280px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 25%;
+  cursor: pointer;
+}
+
+.slider-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(244, 166, 35, 0.2);
+}
+
+.slider-product-card .badges{
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.slider-product-card .save-badge {
+  background: linear-gradient(135deg, red, var(--brand-gold));
+  color: white;
+  padding: 5px 12px;
+  margin: 0 2px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.slider-product-card .new-badge {
+  background: var(--brand-gold);
+  color: white;
+  padding: 5px 12px;
+  margin: 0 2px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.slider-product-card .trend-badge {
+  background: linear-gradient(135deg, var(--brand-black), var(--brand-gold));
+  color: white;
+  padding: 5px;
+  margin: 0 2px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.slider-product-card .quick-look-btn {
+  position: absolute;
+  top: 15px;
+  right: 60px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #1a1a1a;
+  text-decoration: underline;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.slider-product-card .quick-look-btn:hover {
+  background: white;
+  color: var(--brand-gold);
+}
+
+.slider-product-card .favorite-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.slider-product-card .favorite-btn:hover {
+  background: var(--brand-gold);
+  color: white;
+}
+
+.slider-product-card .favorite-btn.active {
+  background: var(--brand-gold);
+  color: white;
+}
+
+.slider-product-card .product-image {
+  width: 100%;
+  height: 200px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 14px;
+  position: relative;
+}
+
+.slider-product-card .product-image > img{
+  height: 125px;
+}
+
+
+.slider-product-card .shopping-bag-icon {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.slider-product-card .shopping-bag-icon:hover {
+  background: var(--brand-gold);
+  transform: scale(1.1);
+}
+
+.slider-product-card .product-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.slider-product-card .brand-name {
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.product-info .product-description{
+  word-wrap: break-word;
+  width: 100%;
+}
+
+.slider-product-card .product-name {
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 15px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.slider-product-card .price-container {
+  margin-bottom: 15px;
+}
+
+.slider-product-card .current-price {
+  color: var(--brand-gold);
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.slider-product-card .discount-price{
+  color: #999;
+  text-decoration: line-through;
+  font-size: 14px;
+}
+
+.slider-product-card .currency-text{
+  color: var(--brand-gold);
+  font-size: 12px;
+}
+
+.slider-product-card .currency-text::after{
+  content: " ";
+}
+
+.slider-product-card .color-section {
+  margin-top: 10px;
+}
+
+.slider-product-card .color-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.slider-product-card .color-options {
+  display: flex;
+  gap: 6px;
+}
+
+.slider-product-card .color-option {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slider-product-card .color-option:hover {
+  transform: scale(1.2);
+  border-color: var(--brand-gold);
+}

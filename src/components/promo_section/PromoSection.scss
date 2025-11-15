@@ -1,0 +1,202 @@
+.promo-section {
+  margin-top: 70px;
+  height: 100%;
+  overflow: hidden;
+
+  .promo-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    img {
+      transition: transform 0.4s ease;
+      // max-height: 150px;
+      max-height: 100%;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+
+    &.large-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f3f3f3;
+
+      .promo-text {
+        max-width: 50%;
+        z-index: 2;
+      }
+
+      .new {
+        color: var(--brand-dark-gold);
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      h2 {
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .discount {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      .promo-img {
+        height: 100% !important;
+        object-fit: contain;
+      }
+
+      .btn {
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 6px 16px;
+        transition: background 0.3s;
+        background: var(--brand-dark-gold);
+        color: #fff;
+        border: 1px solid var(--brand-dark-gold);
+
+        &:hover {
+          background: transparent;
+          color: #000;
+          border: 1px solid #000;
+
+        }
+      }
+    }
+
+    &.small-card {
+      text-align: center;
+      background: #f9f5f0;
+
+      // img {
+      //   max-height: 120px;
+      //   margin-bottom: 10px;
+      // }
+
+      h5 {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+    }
+
+    &.wide-card {
+      background: #eae2d6;
+      padding: 25px;
+
+      .category {
+        font-size: 14px;
+        color: gray;
+      }
+
+      h4 {
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .discount {
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+
+      img {
+        margin: 10px 0;
+      }
+    }
+  }
+
+  .discount-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    z-index: 2;
+    background: var(--brand-dark-gold);
+  }
+
+  .img-with-badge{
+    height: 85%;
+    object-fit: contain;
+  }
+
+  .shop-now {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+    position: relative;
+    transition: color 0.3s;
+
+    &:hover {
+      color: var(--brand-gold);
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--brand-gold);
+      transition: width 0.3s ease;
+    }
+  }
+
+  .men-acssesories{
+    height: 100%;
+    background-color: #f0f0f0 !important;
+    max-height: 100%;
+  }
+  .hand-bag{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #f1f1f1 !important;
+    img{
+      height: 50vh !important;
+    }
+  }
+  .men-backpack{
+    background-color: #F2F2F2 !important;
+  }
+  .men-watches{
+    background-color: #e5e5e7 !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .promo-section {
+    .img-with-badge{
+      height: 75%;
+      object-fit: contain;
+    }
+   
+  }
+  
+}

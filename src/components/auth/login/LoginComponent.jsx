@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { HiLockClosed, HiEye, HiEyeOff } from "react-icons/hi";
-import "./LoginComponent.css";
+import "./LoginComponent.scss";
 import {FaGoogle} from "react-icons/fa";
 import { useAuth } from "../../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -39,13 +39,13 @@ const LoginComponent = () => {
   const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
       const user= await authContext.login(values.emailOrMobile, values.password, setFieldError, setSubmitting);
       if(user){
-          navigate(user.active? "/welcome": `/verify?identifier=${values.emailOrMobile}`, { replace: true });
+          navigate(user.active? "/": `/auth/verify?identifier=${values.emailOrMobile}`, { replace: true });
       }
   }
 
   const handleGoogleLogin = () => {
       // Redirect to Spring Boot OAuth2 endpoint
-      const backendUrl = process.env.ADD_MIX_STORE_BASE_URL || "http://localhost:8080";
+      const backendUrl = process.env.REACT_APP_ADDMIX_STORE_API_BASE_URL || "http://localhost:8080";
       window.location.href = `${backendUrl}/oauth2/authorization/google`;
   };
 
@@ -203,7 +203,7 @@ const LoginComponent = () => {
                       {/* Forgot Password Link */}
                       <div className="mb-4 d-flex">
                         <Link
-                          to={"/forget-password"}
+                          to={"forget-password"}
                           className="text-white-50 text-decoration-underline text-left"
                           style={{ fontSize: "14px" }}
                         >
@@ -302,7 +302,7 @@ const LoginComponent = () => {
                           Don't have an account?{" "}
                         </span>
                         <Link
-                          to={'/register'}
+                          to={'register'}
                           className="text-white text-decoration-none fw-semibold"
                           style={{
                             fontSize: "14px",

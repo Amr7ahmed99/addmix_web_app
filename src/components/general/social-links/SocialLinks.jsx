@@ -5,13 +5,14 @@ import {
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 
 export default function SocialLinks() {
   return (
     <div className="d-flex justify-content-center gap-3">
-      <a
-        href="#1"
+      <Link
+        to={"#1"}
         className="btn btn-outline-light rounded-circle p-2"
         style={{
           width: "45px",
@@ -33,9 +34,9 @@ export default function SocialLinks() {
         }}
       >
         <FaFacebook size={20} className="text-white" />
-      </a>
-      <a
-        href="#1"
+      </Link>
+      <Link
+        to={"#1"}
         className="btn btn-outline-light rounded-circle p-2"
         style={{
           width: "45px",
@@ -57,9 +58,9 @@ export default function SocialLinks() {
         }}
       >
         <FaTwitter size={20} className="text-white" />
-      </a>
-      <a
-        href="#1"
+      </Link>
+      <Link
+        to={"#1"}
         className="btn btn-outline-light rounded-circle p-2"
         style={{
           width: "45px",
@@ -81,9 +82,9 @@ export default function SocialLinks() {
         }}
       >
         <FaYoutube size={20} className="text-white" />
-      </a>
-      <a
-        href="#1"
+      </Link>
+      <Link
+        to={"#1"}
         className="btn btn-outline-light rounded-circle p-2"
         style={{
           width: "45px",
@@ -105,9 +106,9 @@ export default function SocialLinks() {
         }}
       >
         <FaInstagram size={20} className="text-white" />
-      </a>
-      <a
-        href="#1"
+      </Link>
+      <Link
+        to={"#1"}
         className="btn btn-outline-light rounded-circle p-2"
         style={{
           width: "45px",
@@ -129,7 +130,7 @@ export default function SocialLinks() {
         }}
       >
         <FaTiktok size={20} className="text-white" />
-      </a>
+      </Link>
     </div>
   );
 }

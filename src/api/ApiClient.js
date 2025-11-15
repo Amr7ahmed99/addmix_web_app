@@ -1,6 +1,7 @@
 import axios, { HttpStatusCode } from "axios";
+import { getLanguage } from "../utils/Helper";
 
-export const BASE_URL = process.env.ADD_MIX_STORE_BASE_URL || "http://localhost:8080";
+export const BASE_URL = process.env.REACT_APP_ADDMIX_STORE_API_BASE_URL || "http://localhost:8080";
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -14,9 +15,13 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
+    const lang = getLanguage();
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    config.headers["Accept-Language"] = lang; // to ensure that the lang will be sent if the default headers are removed after refreshing the page
     return config;
   },
   (error) => Promise.reject(error)
@@ -80,7 +85,7 @@ apiClient.interceptors.response.use(
         // refresh failed → clear & redirect
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        window.location.href = "/login";
+        window.location.href = "/auth";
 
         return Promise.reject(err);
       } finally {

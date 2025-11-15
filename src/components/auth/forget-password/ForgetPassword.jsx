@@ -67,7 +67,7 @@ export default function ForgetPassword() {
       setSubmitting
     );
     if (user) {
-      navigate("/welcome", {
+      navigate("/", {
         replace: true,
       });
     }

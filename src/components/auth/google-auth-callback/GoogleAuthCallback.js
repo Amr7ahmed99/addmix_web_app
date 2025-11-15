@@ -10,13 +10,14 @@ export default function AuthCallback() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
-    const user = params.get("user");
+    const user = JSON.parse(params.get("user"));
+
 
     if (token) {
       authContext.storeJWT(token, user);
-      navigate("/welcome", { replace: true });
+      navigate("/", { replace: true });
     } else {
-      navigate("/login", { replace: true });
+      navigate("/auth", { replace: true });
     }
   }, [location, navigate, authContext]);
 

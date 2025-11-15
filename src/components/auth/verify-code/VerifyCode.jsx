@@ -4,7 +4,7 @@ import { HttpStatusCode } from "axios";
 import { toast } from "react-toastify";
 import { Form, Field, ErrorMessage, Formik } from "formik";
 import { useAuth } from "../../../context/AuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MdPerson } from "react-icons/md";
 
 export default function VerifyCode({userIdentifierForNewPassword, setNextStepIdx}) {
@@ -16,6 +16,7 @@ export default function VerifyCode({userIdentifierForNewPassword, setNextStepIdx
   const queryParams = new URLSearchParams(location.search);
   const identifier = !userIdentifierForNewPassword? queryParams.get("identifier"): userIdentifierForNewPassword;
   const inputRefs = useRef([]);
+  const navigate= useNavigate();
 
   const handleInputChange = (index, ev, setFieldValue, values) => {
     // Only allow digits
@@ -86,6 +87,7 @@ export default function VerifyCode({userIdentifierForNewPassword, setNextStepIdx
         setNextStepIdx(val=> ++val);
         return;
       }
+      navigate('/', {replace: true});
     }
     
   };
